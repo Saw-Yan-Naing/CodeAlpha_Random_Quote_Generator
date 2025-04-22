@@ -17,9 +17,9 @@ class QuoteRepositoryImpl implements QuoteRepository {
   Future<Result<QuoteModel>> getRandomQuote() async {
     try {
       final dioService = ref.read(dioServiceProvider);
-      final response = await dioService.getApi('/random');
+      final response = await dioService.getApi('random');
 
-      final data = response.data['data'];
+      final data = response.data;
       final quoteModel = QuoteModel.fromJson(data);
       return Result.success(quoteModel);
     } catch (e) {

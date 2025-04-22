@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:random_quote_generator/core/error/error_dialog.dart';
 
 import 'app_error_catching.dart';
 import 'error_provider.dart';
@@ -24,36 +25,7 @@ class ErrorHandlingWidget extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (cxt) {
-                    return Dialog(
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      shadowColor: Colors.blueGrey.withValues(alpha: .5),
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        child: ListView(
-                          shrinkWrap: true,
-
-                          children: [
-                            const Text('Error Occurred'),
-                            const SizedBox(height: 10),
-                            Text(error.currentError!.message),
-                            const SizedBox(height: 10),
-                            Text(error.currentError!.stackTrace.toString()),
-                            const SizedBox(height: 10),
-                            ElevatedButton(
-                              onPressed: () {
-                                error.clearError();
-                                Navigator.of(cxt).pop();
-                                error.currentError?.onRetry?.call();
-                              },
-                              child: const Text('Retry'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+                    return ErrorDialog(error: error.currentError);
                   },
                 );
               });

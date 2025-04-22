@@ -5,6 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:random_quote_generator/core/error/error_handling_widget.dart';
 import 'package:random_quote_generator/quote_generator/presentation/quote_generator_page.dart';
 
+import 'core/error/app_error_catching.dart';
+import 'core/error/error_dialog.dart';
+
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
@@ -26,31 +29,27 @@ void main() {
       debugPrint(
         "Run Guarded Error  ${error.toString()} \n ${stackTrace.toString()}",
       );
-      // showDialog(
-      //   context: navigatorKey.currentContext!,
-      //   builder: (cxt) {
-      //     return Dialog(
-      //       backgroundColor: Colors.white,
-      //       shape: RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(10),
-      //       ),
-      //       shadowColor: Colors.blueGrey.withValues(alpha: .5),
-      //       child: Container(
-      //         padding: const EdgeInsets.all(20),
-      //         child: Column(
-      //           mainAxisSize: MainAxisSize.min,
-      //           children: [
-      //             const Text('Error Occurred in async'),
-      //             const SizedBox(height: 10),
-      //             Text(error.toString()),
-      //             const SizedBox(height: 10),
-      //             Text(stackTrace.toString()),
-      //           ],
-      //         ),
-      //       ),
-      //     );
-      //   },
-      // );
+      FlutterError.presentError(
+        FlutterErrorDetails(
+          exception: error,
+          stack: stackTrace,
+          library: 'Run Guarded',
+          context: ErrorDescription('Run Guarded Error'),
+        ),
+      );
+      showDialog(
+        context: navigatorKey.currentContext!,
+        builder: (context) {
+          return ErrorDialog(
+            error: AppError(
+              statusCode: Error.safeToString(error),
+              message: 'An error occurred.',
+              stackTrace: stackTrace,
+              errorDisplayType: ErrorDisplayType.dialog,
+            ),
+          );
+        },
+      );
     },
   );
 }

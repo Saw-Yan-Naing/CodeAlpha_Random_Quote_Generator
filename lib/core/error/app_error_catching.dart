@@ -4,14 +4,17 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 
 class AppError implements Exception {
+  final String? statusCode;
   final String message;
   final StackTrace? stackTrace;
   final ErrorDisplayType errorDisplayType;
   final VoidCallback? onRetry;
-  const AppError(
-    this.message,
+
+  const AppError({
+    this.statusCode,
+    required this.message,
     this.stackTrace,
-    this.errorDisplayType, {
+    required this.errorDisplayType,
     this.onRetry,
   });
 }
@@ -39,29 +42,38 @@ AppError getError(
 }) {
   if (e is SocketException || e is HttpException) {
     return AppError(
-      'Network error occurred with ${e.message}',
-      StackTrace.current,
-      errorDisplayType,
+      statusCode: "Error Occured ",
+      message: 'Network error occurred with ${e.message}',
+      stackTrace: StackTrace.current,
+      errorDisplayType: errorDisplayType,
     );
   } else if (e is FormatException) {
-    return AppError(e.message, StackTrace.current, errorDisplayType);
+    return AppError(
+      statusCode: "Format Exception",
+      message: e.message,
+      stackTrace: StackTrace.current,
+      errorDisplayType: errorDisplayType,
+    );
   } else if (e is DioException) {
     return AppError(
-      'Dio error occurred with ${e.message}',
-      StackTrace.current,
-      errorDisplayType,
+      statusCode: e.response?.statusCode.toString(),
+      message: 'Dio error occurred with ${e.message}',
+      stackTrace: StackTrace.current,
+      errorDisplayType: errorDisplayType,
     );
   } else if (e is Exception) {
     return AppError(
-      'Exception occurred with ${e.toString()}',
-      StackTrace.current,
-      errorDisplayType,
+      statusCode: "Exception Occurred",
+      message: 'Exception occurred with ${e.toString()}',
+      stackTrace: StackTrace.current,
+      errorDisplayType: errorDisplayType,
     );
   } else {
     return AppError(
-      'Unknown error occurred',
-      StackTrace.current,
-      errorDisplayType,
+      statusCode: "Unknown Error",
+      message: 'Unknown error occurred',
+      stackTrace: StackTrace.current,
+      errorDisplayType: errorDisplayType,
     );
   }
 }

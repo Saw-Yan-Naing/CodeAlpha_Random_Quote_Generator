@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:random_quote_generator/core/dio_service/dio_response.dart';
-import 'package:random_quote_generator/core/error/app_error_catching.dart';
 import 'package:random_quote_generator/env/env.dart';
 
 abstract class DioService {
@@ -27,18 +26,17 @@ class DioServiceImpl extends DioService {
 
   @override
   Future<DioResponse> getApi(String endpoint) async {
-    // try {
-    //   final response = await _dio.get(endpoint);
-    //   final dioResponse = DioResponse.fromJson({
-    //     'data': response.data,
-    //     'statusCode': response.statusCode,
-    //     'statusMessage': response.statusMessage,
-    //   });
-    //   return dioResponse;
-    // } catch (e) {
-    //   rethrow;
-    // }
-    throw Exception("Calling getApi method is not implemented yet.");
+    try {
+      final response = await _dio.get(endpoint);
+      final dioResponse = DioResponse.fromJson({
+        'data': response.data,
+        'statusCode': response.statusCode,
+        'statusMessage': response.statusMessage,
+      });
+      return dioResponse;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
