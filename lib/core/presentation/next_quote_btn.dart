@@ -10,7 +10,8 @@ class NextQuoteBtn extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final controller = useAnimationController(
-      duration: const Duration(milliseconds: 500),
+      animationBehavior: AnimationBehavior.preserve,
+      duration: const Duration(milliseconds: 300),
     );
 
     useEffect(() {
@@ -43,8 +44,8 @@ class NextQuoteBtn extends HookWidget {
                 isLoading
                     ? Container(
                       padding: const EdgeInsets.all(5),
-                      width: 30,
-                      height: 30,
+                      width: 23,
+                      height: 23,
                       child: CircularProgressIndicator(
                         strokeWidth: 2,
                         color: Colors.blue,
