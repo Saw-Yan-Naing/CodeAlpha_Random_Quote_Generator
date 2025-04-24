@@ -34,33 +34,35 @@ class ErrorDialog extends StatelessWidget {
                 ),
               ),
 
-              SingleChildScrollView(
-                child:
-                    (!kDebugMode)
-                        ? Text(
-                          error?.message ?? "An error occurred",
-                          style: TextStyle(color: Colors.black, fontSize: 14),
-                        )
-                        : Column(
-                          children: [
-                            Text(
-                              error?.message ?? "An error occurred",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
+              Flexible(
+                child: SingleChildScrollView(
+                  child:
+                      (!kDebugMode)
+                          ? Text(
+                            error?.message ?? "An error occurred",
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                          )
+                          : Column(
+                            children: [
+                              Text(
+                                error?.message ?? "An error occurred",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              error?.stackTrace?.toString() ??
-                                  "No stack trace available",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
+                              const SizedBox(height: 10),
+                              Text(
+                                error?.stackTrace?.toString() ??
+                                    "No stack trace available",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                ),
               ),
 
               Align(
