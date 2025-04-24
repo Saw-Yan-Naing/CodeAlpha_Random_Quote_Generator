@@ -13,6 +13,7 @@ import 'core/error/error_dialog.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
+Object? _previousError;
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.presentError(details);
@@ -46,23 +47,18 @@ void main() {
       );
     },
     (error, stackTrace) {
+      if (_previousError == error) return;
+
+      _previousError = error;
       debugPrint(
         "Run Guarded Error  ${error.toString()} \n ${stackTrace.toString()}",
-      );
-      FlutterError.presentError(
-        FlutterErrorDetails(
-          exception: error,
-          stack: stackTrace,
-          library: 'Run Guarded',
-          context: ErrorDescription('Run Guarded Error'),
-        ),
       );
       showDialog(
         context: navigatorKey.currentContext!,
         builder: (context) {
           return ErrorDialog(
             error: AppError(
-              statusCode: Error.safeToString(error),
+              statusCode: (error).toString(),
               message: 'An error occurred.',
               stackTrace: stackTrace,
               errorDisplayType: ErrorDisplayType.dialog,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:random_quote_generator/quote_generator/domain/assets_image.dart';
 import 'package:random_quote_generator/quote_generator/presentation/quote_card.dart';
 
 import '../provider/quote_provider.dart';
@@ -28,14 +30,27 @@ class _QuoteGeneratorPageState extends ConsumerState<QuoteGeneratorPage> {
                         ? Center(
                           child: Padding(
                             padding: const EdgeInsets.all(30),
-                            child: Text(
-                              'No Quote Available',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'serif',
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black87,
-                              ),
+                            child: Column(
+                              spacing: 30,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  MySvg.logo,
+                                  height: 70,
+                                  width: 70,
+                                ),
+
+                                Text(
+                                  'No Quote Available',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'serif',
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         )
@@ -46,6 +61,11 @@ class _QuoteGeneratorPageState extends ConsumerState<QuoteGeneratorPage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             spacing: 20,
                             children: [
+                              SvgPicture.asset(
+                                MySvg.logo,
+                                height: 70,
+                                width: 70,
+                              ),
                               Text(
                                 "Quote of the Day",
                                 style: TextStyle(

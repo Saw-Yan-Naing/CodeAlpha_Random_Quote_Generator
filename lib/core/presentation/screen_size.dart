@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:random_quote_generator/main.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 class ScreenSize {
-  static bool isMobile(BuildContext context) {
-    return ResponsiveBreakpoints.of(context).isMobile ||
-        MediaQuery.of(context).size.width < 600;
+  static bool isMobile({BuildContext? context}) {
+    return MediaQuery.of(context ?? navigatorKey.currentContext!).size.width <
+        600;
   }
 
   static bool isTablet(BuildContext context) {
@@ -25,7 +24,7 @@ class ScreenSize {
     return MediaQuery.of(navigatorKey.currentContext!).size.height;
   }
 
-  static double getScreenWidth() {
-    return MediaQuery.of(navigatorKey.currentContext!).size.width;
+  static double getScreenWidth({BuildContext? context}) {
+    return MediaQuery.of(context ?? navigatorKey.currentContext!).size.width;
   }
 }

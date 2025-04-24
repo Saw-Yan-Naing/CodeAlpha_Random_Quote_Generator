@@ -22,7 +22,7 @@ class QuoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = ScreenSize.isMobile(context);
+    final isMobile = ScreenSize.isMobile(context: context);
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       color: Colors.white,
